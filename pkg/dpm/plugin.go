@@ -139,10 +139,13 @@ func (dpi *devicePlugin) register() error {
 	}
 	client := pluginapi.NewRegistrationClient(conn)
 	glog.Infof("%s: Registration for endpoint %s", dpi.Name, path.Base(dpi.Socket))
+
+    options := dpi.devicePluginImpl.GetDevicePluginOptions(context.Background(), &pluginapi.Empty{})
 	reqt := &pluginapi.RegisterRequest{
 		Version:      pluginapi.Version,
 		Endpoint:     path.Base(dpi.Socket),
 		ResourceName: dpi.ResourceName,
+        Options: options,
 	}
 
 	_, err = client.Register(context.Background(), reqt)
