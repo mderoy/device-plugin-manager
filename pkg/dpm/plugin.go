@@ -140,16 +140,15 @@ func (dpi *devicePlugin) register() error {
 	client := pluginapi.NewRegistrationClient(conn)
 	glog.Infof("%s: Registration for endpoint %s", dpi.Name, path.Base(dpi.Socket))
 
-//    options, err := dpi.DevicePluginImpl.GetDevicePluginOptions(context.Background(), &pluginapi.Empty{})
-//	reqt := &pluginapi.RegisterRequest{
-//		Version:      pluginapi.Version,
-//		Endpoint:     path.Base(dpi.Socket),
-//		ResourceName: dpi.ResourceName,
-//        Options: options,
-//	}
+    options, err := dpi.DevicePluginImpl.GetDevicePluginOptions(context.Background(), &pluginapi.Empty{})
+	reqt := &pluginapi.RegisterRequest{
+		Version:      pluginapi.Version,
+		Endpoint:     path.Base(dpi.Socket),
+		ResourceName: dpi.ResourceName,
+        Options: options,
+	}
 
-//	_, err = client.Register(context.Background(), reqt)
-    _, err = client.RegisterPlugin(dpi.ResourceName, path.Base(dpi.Socket), pluginapi.Version)
+	_, err = client.Register(context.Background(), reqt)
 	if err != nil {
 		glog.Errorf("%s: Registration failed: %s", dpi.Name, err)
 		glog.Errorf("%s: Make sure that the DevicePlugins feature gate is enabled and kubelet running", dpi.Name)
