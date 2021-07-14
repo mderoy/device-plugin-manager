@@ -1,4 +1,4 @@
-module github.com/kubevirt/device-plugin-manager
+module github.com/mderoy/device-plugin-manager
 
 go 1.14
 
